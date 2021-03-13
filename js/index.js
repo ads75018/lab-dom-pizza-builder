@@ -65,14 +65,27 @@ function renderGreenPeppers() {
 }
 
 function renderWhiteSauce() {
-  document.querySelectorAll('.sauce .sauce-white').forEach(sauce => {
-    if (state.whiteSauce) {
-      sauce.className = 'sauce sauce-white';
-    } else {
-      sauce.className = 'sauce';
-    }
-  });
+  let sauce = document.querySelector('.sauce');
+  let whitesauce = document.querySelector('.sauce-white'); 
+
+  if(whitesauce) {
+    whitesauce.className = 'sauce';
+  } else {
+    sauce.className = 'sauce-white';
+  }
 }
+
+// function renderWhiteSauce() {
+//   document.querySelectorAll(".sauce").forEach((sauce) => {
+//     console.log(sauce);
+//     sauce.className = "sauce sauce-white";
+//   });
+//   document.querySelectorAll(".sauce-white").forEach((sauce) => {
+//     console.log(sauce);
+//     sauce.className = "sauce";
+//   });
+// }
+
 
 function renderGlutenFreeCrust() {
   // Iteration 2: add/remove the class "crust-gluten-free" of `<section class="crust">`
