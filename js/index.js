@@ -95,28 +95,43 @@ function renderPrice() {
 renderEverything();
 
 // Iteration 1: Example of a click event listener on `<button class="btn btn-pepperoni">`
-document.querySelector(".btn.btn-pepperoni").addEventListener("click", () => {
+const btnPepperoni = document.querySelector(".btn.btn-pepperoni");
+btnPepperoni.addEventListener("click", () => {
   state.pepperoni = !state.pepperoni;
+  if (state.pepperoni) btnPepperoni.classList.add("active");
+  else btnPepperoni.classList.remove("active");
   renderEverything();
 });
 
-document.querySelector(".btn.btn-mushrooms").addEventListener("click", () => {
-  state.mushroom = !state.mushroom;
+const btnMush = document.querySelector(".btn.btn-mushrooms");
+btnMush.addEventListener("click", () => {
+  state.mushrooms = !state.mushrooms;
+  if (state.mushrooms) btnMush.classList.add("active");
+  else btnMush.classList.remove("active");
   renderEverything();
 });
 
-document.querySelector(".btn.btn-green-peppers").addEventListener("click", () => {
+const btnPepper = document.querySelector(".btn.btn-green-peppers");
+btnPepper.addEventListener("click", () => {
   state.greenPeppers = !state.greenPeppers;
+  if (state.greenPeppers) btnPepper.classList.add("active");
+  else btnPepper.classList.remove("active");
   renderEverything();
 });
 
-document.querySelector(".btn.btn-sauce").addEventListener("click", () => {
+const btnSauce = document.querySelector(".btn.btn-sauce");
+btnSauce.addEventListener("click", () => {
   state.whiteSauce = !state.whiteSauce;
+  if (state.whiteSauce) btnSauce.classList.add("active");
+  else btnSauce.classList.remove("active");
   renderEverything();
 });
 
-document.querySelector(".btn.btn-crust").addEventListener("click", () => {
+const btnCrust = document.querySelector(".btn.btn-crust");
+btnCrust.addEventListener("click", () => {
   state.glutenFreeCrust = !state.glutenFreeCrust;
+  if (state.glutenFreeCrust) btnCrust.classList.add("active");
+  else btnCrust.classList.remove("active");
   renderEverything();
 });
 
