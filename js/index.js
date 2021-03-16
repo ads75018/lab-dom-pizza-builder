@@ -124,8 +124,6 @@ function renderPrice() {
   let total = 10;
   for (const key in state) {
     if (Object.hasOwnProperty.call(state, key)) {
-      const currentState = state[key];
-
       if (state[key]) {
         total += ingredients[key].price;
       }
@@ -139,7 +137,6 @@ renderEverything();
 for (const key of stateKeys) {
   let btn = objBtn[key];
   btn.addEventListener("click", () => {
-    console.log(state[key], !state[key], objRender[key]);
     state[key] = !state[key];
     objRender[key]();
     objRender.buttons();
