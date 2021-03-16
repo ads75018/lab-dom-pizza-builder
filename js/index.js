@@ -1,14 +1,24 @@
-const btnPepperoni = document.querySelector(".btn.btn-pepperoni");
-const btnMush = document.querySelector(".btn.btn-mushrooms");
-const btnPepper = document.querySelector(".btn.btn-green-peppers");
-const btnSauce = document.querySelector(".btn.btn-sauce");
-const btnCrust = document.querySelector(".btn.btn-crust");
 const pepText = document.querySelector(".panel.price li");
 const mushText = document.querySelector(".panel.price li:nth-child(2)");
 const pepperText = document.querySelector(".panel.price li:nth-child(3)");
 const sauceText = document.querySelector(".panel.price li:nth-child(4)");
 const crustText = document.querySelector(".panel.price li:nth-child(5)");
-
+const objBtn = {
+  pepperoni: document.querySelector(".btn.btn-pepperoni"),
+  mushrooms: document.querySelector(".btn.btn-mushrooms"),
+  greenPeppers: document.querySelector(".btn.btn-green-peppers"),
+  whiteSauce: document.querySelector(".btn.btn-sauce"),
+  glutenFreeCrust: document.querySelector(".btn.btn-crust"),
+};
+const objRender = {
+  pepperoni: renderPepperoni,
+  mushrooms: renderMushrooms,
+  greenPeppers: renderGreenPeppers,
+  whiteSauce: renderWhiteSauce,
+  glutenFreeCrust: renderGlutenFreeCrust,
+  buttons: renderButtons,
+  price: renderPrice,
+};
 let basePrice = 10;
 
 let ingredients = {
@@ -26,15 +36,15 @@ let state = {
   whiteSauce: false,
   glutenFreeCrust: false,
 };
+const stateKeys = Object.keys(state);
 
 function renderEverything() {
-  renderPepperoni();
-  renderMushrooms();
-  renderGreenPeppers();
-  renderWhiteSauce();
-  renderGlutenFreeCrust();
-  renderButtons();
-  renderPrice();
+  for (const key in objRender) {
+    if (Object.hasOwnProperty.call(objRender, key)) {
+      const fun = objRender[key];
+      fun();
+    }
+  }
 }
 
 function renderPepperoni() {
@@ -99,77 +109,40 @@ function renderGlutenFreeCrust() {
 }
 
 function renderButtons() {
-  if (state.pepperoni) {
-    btnPepperoni.classList.add("active");
-  } else {
-    btnPepperoni.classList.remove("active");
-  }
-  if (state.mushrooms) {
-    btnMush.classList.add("active");
-  } else {
-    btnMush.classList.remove("active");
-  }
-  if (state.greenPeppers) {
-    btnPepper.classList.add("active");
-  } else {
-    btnPepper.classList.remove("active");
-  }
-  if (state.whiteSauce) {
-    btnSauce.classList.add("active");
-  } else {
-    btnSauce.classList.remove("active");
-  }
-  if (state.glutenFreeCrust) {
-    btnCrust.classList.add("active");
-  } else {
-    btnCrust.classList.remove("active");
+  for (const key of stateKeys) {
+    let btn = objBtn[key];
+    console.log(state[key]);
+    if (state[key]) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
   }
 }
 
 function renderPrice() {
   let total = 10;
-  if (state.pepperoni) {
-    total += ingredients.pepperoni.price;
-  }
-  if (state.mushrooms) {
-    total += ingredients.mushrooms.price;
-  }
-  if (state.greenPeppers) {
-    total += ingredients.greenPeppers.price;
-  }
-  if (state.whiteSauce) {
-    total += ingredients.whiteSauce.price;
-  }
-  if (state.glutenFreeCrust) {
-    total += ingredients.glutenFreeCrust.price;
-  }
+  for (const key in state) {
+    if (Object.hasOwnProperty.call(state, key)) {
+      const currentState = state[key];
 
+      if (state[key]) {
+        total += ingredients[key].price;
+      }
+    }
+  }
   document.querySelector(".panel.price > strong").textContent = `$` + total;
 }
 
 renderEverything();
 
-btnPepperoni.addEventListener("click", () => {
-  state.pepperoni = !state.pepperoni;
-  renderEverything();
-});
-
-btnMush.addEventListener("click", () => {
-  state.mushrooms = !state.mushrooms;
-  renderEverything();
-});
-
-btnPepper.addEventListener("click", () => {
-  state.greenPeppers = !state.greenPeppers;
-  renderEverything();
-});
-
-btnSauce.addEventListener("click", () => {
-  state.whiteSauce = !state.whiteSauce;
-  renderEverything();
-});
-
-btnCrust.addEventListener("click", () => {
-  state.glutenFreeCrust = !state.glutenFreeCrust;
-  renderEverything();
-});
+for (const key of stateKeys) {
+  let btn = objBtn[key];
+  btn.addEventListener("click", () => {
+    console.log(state[key], !state[key], objRender[key]);
+    state[key] = !state[key];
+    objRender[key]();
+    objRender.buttons();
+    objRender.price();
+  });
+}
